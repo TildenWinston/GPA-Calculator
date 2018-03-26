@@ -20,6 +20,9 @@ import java.awt.Window.Type;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JDesktopPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 
 public class view1 {
 
@@ -35,7 +38,7 @@ public class view1 {
 	private JTextField creditHours7;
 	private JTextField creditHours8;
 	private JTextField creditHours9;
-	private JTextField textField_8creditHours10;
+	private JTextField creditHours10;
 	private JTextField creditHours11;
 	private JTextField creditHours12;
 	private JTextField creditHours13;
@@ -70,6 +73,21 @@ public class view1 {
 	private JTextField courseName13;
 	private JTextField courseName14;
 	private JTextField courseName15;
+	private JComboBox comboBox;
+	private JComboBox comboBox_1;
+	private JComboBox comboBox_2;
+	private JComboBox comboBox_3;
+	private JComboBox comboBox_4;
+	private JComboBox comboBox_5;
+	private JComboBox comboBox_6;
+	private JComboBox comboBox_7;
+	private JComboBox comboBox_8;
+	private JComboBox comboBox_9;
+	private JComboBox comboBox_10;
+	private JComboBox comboBox_11;
+	private JComboBox comboBox_12;
+	private JComboBox comboBox_13;
+	private JComboBox comboBox_14;
 
 	/**
 	 * Launch the application.
@@ -135,13 +153,33 @@ public class view1 {
 		frame.getContentPane().add(lblNewLabel_3, "cell 5 1");
 		
 		JButton btnDeleteAll = new JButton("Delete All");
+		btnDeleteAll.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deleteRow1();
+				deleteRow2();
+				deleteRow3();
+				deleteRow4();
+				deleteRow5();
+				deleteRow6();
+				deleteRow7();
+				deleteRow8();
+				deleteRow9();
+				deleteRow10();
+				deleteRow11();
+				deleteRow12();
+				deleteRow13();
+				deleteRow14();
+				deleteRow15();
+			}
+		});
 		frame.getContentPane().add(btnDeleteAll, "cell 6 1");
 		
 		JLabel label = new JLabel("1");
 		frame.getContentPane().add(label, "cell 1 2,alignx center");
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"taken", "current", "anticipated"}));
+		comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
 		frame.getContentPane().add(comboBox, "cell 2 2,growx");
 		
 		creditHours1 = new JTextField();
@@ -157,13 +195,19 @@ public class view1 {
 		courseName1.setColumns(10);
 		
 		JButton deleteRow1 = new JButton("Delete Row");
+		deleteRow1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				deleteRow1();
+			}
+		});
 		frame.getContentPane().add(deleteRow1, "cell 6 2");
 		
 		JLabel label_1 = new JLabel("2");
 		frame.getContentPane().add(label_1, "cell 1 3,alignx center");
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"taken", "current", "anticipated"}));
+		comboBox_1 = new JComboBox();
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
 		frame.getContentPane().add(comboBox_1, "cell 2 3,growx");
 		
 		creditHours2 = new JTextField();
@@ -179,13 +223,19 @@ public class view1 {
 		frame.getContentPane().add(courseName2, "cell 5 3,growx");
 		
 		JButton deleteRow2 = new JButton("Delete Row");
+		deleteRow2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deleteRow2();
+			}
+		});
 		frame.getContentPane().add(deleteRow2, "cell 6 3");
 		
 		JLabel label_2 = new JLabel("3");
 		frame.getContentPane().add(label_2, "cell 1 4,alignx center");
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"taken", "current", "anticipated"}));
+		comboBox_2 = new JComboBox();
+		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
 		frame.getContentPane().add(comboBox_2, "cell 2 4,growx");
 		
 		creditHours3 = new JTextField();
@@ -201,13 +251,19 @@ public class view1 {
 		courseName3.setColumns(10);
 		
 		JButton deleteRow3 = new JButton("Delete Row");
+		deleteRow3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deleteRow3();
+			}
+		});
 		frame.getContentPane().add(deleteRow3, "cell 6 4");
 		
 		JLabel label_3 = new JLabel("4");
 		frame.getContentPane().add(label_3, "cell 1 5,alignx center");
 		
-		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"taken", "current", "anticipated"}));
+		comboBox_3 = new JComboBox();
+		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
 		frame.getContentPane().add(comboBox_3, "cell 2 5,growx");
 		
 		creditHours4 = new JTextField();
@@ -224,7 +280,9 @@ public class view1 {
 		
 		JButton deleteRow4 = new JButton("Delete Row");
 		deleteRow4.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				deleteRow4();
 			}
 		});
 		frame.getContentPane().add(deleteRow4, "cell 6 5");
@@ -232,8 +290,8 @@ public class view1 {
 		JLabel label_4 = new JLabel("5");
 		frame.getContentPane().add(label_4, "cell 1 6,alignx center");
 		
-		JComboBox comboBox_4 = new JComboBox();
-		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"taken", "current", "anticipated"}));
+		comboBox_4 = new JComboBox();
+		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
 		frame.getContentPane().add(comboBox_4, "cell 2 6,growx");
 		
 		creditHours5 = new JTextField();
@@ -249,13 +307,19 @@ public class view1 {
 		courseName5.setColumns(10);
 		
 		JButton deleteRow5 = new JButton("Delete Row");
+		deleteRow5.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deleteRow5();
+			}
+		});
 		frame.getContentPane().add(deleteRow5, "cell 6 6");
 		
 		JLabel label_5 = new JLabel("6");
 		frame.getContentPane().add(label_5, "cell 1 7,alignx center");
 		
-		JComboBox comboBox_5 = new JComboBox();
-		comboBox_5.setModel(new DefaultComboBoxModel(new String[] {"taken", "current", "anticipated"}));
+		comboBox_5 = new JComboBox();
+		comboBox_5.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
 		frame.getContentPane().add(comboBox_5, "cell 2 7,growx");
 		
 		creditHours6 = new JTextField();
@@ -271,13 +335,19 @@ public class view1 {
 		courseName6.setColumns(10);
 		
 		JButton deleteRow6 = new JButton("Delete Row");
+		deleteRow6.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deleteRow6();
+			}
+		});
 		frame.getContentPane().add(deleteRow6, "cell 6 7");
 		
 		JLabel label_6 = new JLabel("7");
 		frame.getContentPane().add(label_6, "cell 1 8,alignx center");
 		
-		JComboBox comboBox_6 = new JComboBox();
-		comboBox_6.setModel(new DefaultComboBoxModel(new String[] {"taken", "current", "anticipated"}));
+		comboBox_6 = new JComboBox();
+		comboBox_6.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
 		frame.getContentPane().add(comboBox_6, "cell 2 8,growx");
 		
 		creditHours7 = new JTextField();
@@ -293,13 +363,19 @@ public class view1 {
 		courseName7.setColumns(10);
 		
 		JButton deleteRow7 = new JButton("Delete Row");
+		deleteRow7.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deleteRow7();
+			}
+		});
 		frame.getContentPane().add(deleteRow7, "cell 6 8");
 		
 		JLabel label_7 = new JLabel("8");
 		frame.getContentPane().add(label_7, "cell 1 9,alignx center");
 		
-		JComboBox comboBox_7 = new JComboBox();
-		comboBox_7.setModel(new DefaultComboBoxModel(new String[] {"taken", "current", "anticipated"}));
+		comboBox_7 = new JComboBox();
+		comboBox_7.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
 		frame.getContentPane().add(comboBox_7, "cell 2 9,growx");
 		
 		creditHours8 = new JTextField();
@@ -315,13 +391,19 @@ public class view1 {
 		courseName8.setColumns(10);
 		
 		JButton deleteRow8 = new JButton("Delete Row");
+		deleteRow8.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deleteRow8();
+			}
+		});
 		frame.getContentPane().add(deleteRow8, "cell 6 9");
 		
 		JLabel label_8 = new JLabel("9");
 		frame.getContentPane().add(label_8, "cell 1 10,alignx center");
 		
-		JComboBox comboBox_8 = new JComboBox();
-		comboBox_8.setModel(new DefaultComboBoxModel(new String[] {"taken", "current", "anticipated"}));
+		comboBox_8 = new JComboBox();
+		comboBox_8.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
 		frame.getContentPane().add(comboBox_8, "cell 2 10,growx");
 		
 		creditHours9 = new JTextField();
@@ -337,18 +419,25 @@ public class view1 {
 		courseName9.setColumns(10);
 		
 		JButton deleteRow9 = new JButton("Delete Row");
+		deleteRow9.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deleteRow9();
+			}
+			
+		});
 		frame.getContentPane().add(deleteRow9, "cell 6 10");
 		
 		JLabel label_9 = new JLabel("10");
 		frame.getContentPane().add(label_9, "cell 1 11,alignx center");
 		
-		JComboBox comboBox_9 = new JComboBox();
-		comboBox_9.setModel(new DefaultComboBoxModel(new String[] {"taken", "current", "anticipated"}));
+		comboBox_9 = new JComboBox();
+		comboBox_9.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
 		frame.getContentPane().add(comboBox_9, "cell 2 11,growx");
 		
-		textField_8creditHours10 = new JTextField();
-		textField_8creditHours10.setColumns(10);
-		frame.getContentPane().add(textField_8creditHours10, "cell 3 11,growx");
+		creditHours10 = new JTextField();
+		creditHours10.setColumns(10);
+		frame.getContentPane().add(creditHours10, "cell 3 11,growx");
 		
 		grade10 = new JTextField();
 		frame.getContentPane().add(grade10, "cell 4 11,growx");
@@ -359,13 +448,20 @@ public class view1 {
 		courseName10.setColumns(10);
 		
 		JButton deleteRow10 = new JButton("Delete Row");
+		deleteRow10.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deleteRow10();
+			}
+			
+		});
 		frame.getContentPane().add(deleteRow10, "cell 6 11");
 		
 		JLabel label_10 = new JLabel("11");
 		frame.getContentPane().add(label_10, "cell 1 12,alignx center");
 		
-		JComboBox comboBox_10 = new JComboBox();
-		comboBox_10.setModel(new DefaultComboBoxModel(new String[] {"taken", "current", "anticipated"}));
+		comboBox_10 = new JComboBox();
+		comboBox_10.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
 		frame.getContentPane().add(comboBox_10, "cell 2 12,growx");
 		
 		creditHours11 = new JTextField();
@@ -381,13 +477,20 @@ public class view1 {
 		courseName11.setColumns(10);
 		
 		JButton deleteRow11 = new JButton("Delete Row");
+		deleteRow11.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deleteRow11();
+			}
+			
+		});
 		frame.getContentPane().add(deleteRow11, "cell 6 12");
 		
 		JLabel label_11 = new JLabel("12");
 		frame.getContentPane().add(label_11, "cell 1 13,alignx center");
 		
-		JComboBox comboBox_11 = new JComboBox();
-		comboBox_11.setModel(new DefaultComboBoxModel(new String[] {"taken", "current", "anticipated"}));
+		comboBox_11 = new JComboBox();
+		comboBox_11.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
 		frame.getContentPane().add(comboBox_11, "cell 2 13,growx");
 		
 		creditHours12 = new JTextField();
@@ -403,13 +506,20 @@ public class view1 {
 		courseName12.setColumns(10);
 		
 		JButton deleteRow12 = new JButton("Delete Row");
+		deleteRow12.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deleteRow12();
+			}
+			
+		});
 		frame.getContentPane().add(deleteRow12, "cell 6 13");
 		
 		JLabel label_12 = new JLabel("13");
 		frame.getContentPane().add(label_12, "cell 1 14,alignx center");
 		
-		JComboBox comboBox_12 = new JComboBox();
-		comboBox_12.setModel(new DefaultComboBoxModel(new String[] {"taken", "current", "anticipated"}));
+		comboBox_12 = new JComboBox();
+		comboBox_12.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
 		frame.getContentPane().add(comboBox_12, "cell 2 14,growx");
 		
 		creditHours13 = new JTextField();
@@ -425,13 +535,20 @@ public class view1 {
 		courseName13.setColumns(10);
 		
 		JButton deleteRow13 = new JButton("Delete Row");
+		deleteRow13.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deleteRow13();
+			}
+			
+		});
 		frame.getContentPane().add(deleteRow13, "cell 6 14");
 		
 		JLabel label_13 = new JLabel("14");
 		frame.getContentPane().add(label_13, "cell 1 15,alignx center");
 		
-		JComboBox comboBox_13 = new JComboBox();
-		comboBox_13.setModel(new DefaultComboBoxModel(new String[] {"taken", "current", "anticipated"}));
+		comboBox_13 = new JComboBox();
+		comboBox_13.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
 		frame.getContentPane().add(comboBox_13, "cell 2 15,growx");
 		
 		creditHours14 = new JTextField();
@@ -447,13 +564,20 @@ public class view1 {
 		frame.getContentPane().add(courseName14, "cell 5 15,growx");
 		
 		JButton deleteRow14 = new JButton("Delete Row");
+		deleteRow14.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deleteRow14();
+			}
+			
+		});
 		frame.getContentPane().add(deleteRow14, "cell 6 15");
 		
 		JLabel label_14 = new JLabel("15");
 		frame.getContentPane().add(label_14, "cell 1 16,alignx center");
 		
-		JComboBox comboBox_14 = new JComboBox();
-		comboBox_14.setModel(new DefaultComboBoxModel(new String[] {"taken", "current", "anticipated"}));
+		comboBox_14 = new JComboBox();
+		comboBox_14.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
 		frame.getContentPane().add(comboBox_14, "cell 2 16,growx");
 		
 		creditHours15 = new JTextField();
@@ -469,6 +593,13 @@ public class view1 {
 		frame.getContentPane().add(courseName15, "cell 5 16,growx");
 		
 		JButton deleteRow15 = new JButton("Delete Row");
+		deleteRow15.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deleteRow15();
+			}
+			
+		});
 		frame.getContentPane().add(deleteRow15, "cell 6 16");
 		
 		JButton btnCalculateGpa = new JButton("Calculate GPA");
@@ -494,6 +625,125 @@ public class view1 {
 		JLabel lblNeededGpa = new JLabel("Needed GPA:");
 		frame.getContentPane().add(lblNeededGpa, "cell 6 18");
 		
+	}
+	
+	public void deleteRow1() {
+		comboBox.setSelectedIndex(0);
+		creditHours1.setText("");
+		grade1.setText("");
+		courseName1.setText("");
+		//System.out.println("Delete Button One Pressed");
+	}
+	
+	public void deleteRow2() {
+		comboBox_1.setSelectedIndex(0);
+		creditHours2.setText("");
+		grade2.setText("");
+		courseName2.setText("");
+		//System.out.println("Delete Button One Pressed");
+	}
+	public void deleteRow3() {
+		comboBox_2.setSelectedIndex(0);
+		creditHours3.setText("");
+		grade3.setText("");
+		courseName3.setText("");
+		//System.out.println("Delete Button One Pressed");
+	}
+	
+	public void deleteRow4() {
+		comboBox_3.setSelectedIndex(0);
+		creditHours4.setText("");
+		grade4.setText("");
+		courseName4.setText("");
+		//System.out.println("Delete Button One Pressed");
+	}
+	
+	public void deleteRow5() {
+		comboBox_4.setSelectedIndex(0);
+		creditHours5.setText("");
+		grade5.setText("");
+		courseName5.setText("");
+		//System.out.println("Delete Button One Pressed");
+	}
+	
+	public void deleteRow6() {
+		comboBox_5.setSelectedIndex(0);
+		creditHours6.setText("");
+		grade6.setText("");
+		courseName6.setText("");
+		//System.out.println("Delete Button One Pressed");
+	}
+	
+	public void deleteRow7() {
+		comboBox_6.setSelectedIndex(0);
+		creditHours7.setText("");
+		grade7.setText("");
+		courseName7.setText("");
+		//System.out.println("Delete Button One Pressed");
+	}
+	
+	public void deleteRow8() {
+		comboBox_7.setSelectedIndex(0);
+		creditHours8.setText("");
+		grade8.setText("");
+		courseName8.setText("");
+		//System.out.println("Delete Button One Pressed");
+	}
+	
+	public void deleteRow9() {
+		comboBox_8.setSelectedIndex(0);
+		creditHours9.setText("");
+		grade9.setText("");
+		courseName9.setText("");
+		//System.out.println("Delete Button One Pressed");
+	}
+	
+	public void deleteRow10() {
+		comboBox_9.setSelectedIndex(0);
+		creditHours10.setText("");
+		grade10.setText("");
+		courseName10.setText("");
+		//System.out.println("Delete Button One Pressed");
+	}
+	
+	public void deleteRow11() {
+		comboBox_10.setSelectedIndex(0);
+		creditHours11.setText("");
+		grade11.setText("");
+		courseName11.setText("");
+		//System.out.println("Delete Button One Pressed");
+	}
+	
+	public void deleteRow12() {
+		comboBox_11.setSelectedIndex(0);
+		creditHours12.setText("");
+		grade12.setText("");
+		courseName12.setText("");
+		//System.out.println("Delete Button One Pressed");
+	}
+	
+	public void deleteRow13() {
+		comboBox_12.setSelectedIndex(0);
+		creditHours13.setText("");
+		grade13.setText("");
+		courseName13.setText("");
+		//System.out.println("Delete Button One Pressed");
+	}
+	
+	public void deleteRow14() {
+		comboBox_13.setSelectedIndex(0);
+		creditHours14.setText("");
+		grade14.setText("");
+		courseName14.setText("");
+		//System.out.println("Delete Button One Pressed");
+	}
+	
+	public void deleteRow15() {
+		comboBox_14.setSelectedIndex(0);
+		creditHours15.setText("");
+		grade15.setText("");
+		courseName15.setText("");
+		//System.out.println("Delete Button One Pressed");
 	}
 
 }

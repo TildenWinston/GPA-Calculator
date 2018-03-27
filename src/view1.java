@@ -22,6 +22,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.JDesktopPane;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Color;
+
+import java.lang.Math;
 
 
 public class view1 {
@@ -88,6 +91,9 @@ public class view1 {
 	private JComboBox comboBox_12;
 	private JComboBox comboBox_13;
 	private JComboBox comboBox_14;
+	private JLabel errorLabel;
+	private JLabel lblNewLabel;
+	private JLabel gpaLabel;
 
 	/**
 	 * Launch the application.
@@ -134,14 +140,21 @@ public class view1 {
 		
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new MigLayout("", "[0px:n,grow][15px:n:30px,grow,center][120px:126.00px:150px,grow][90px:n:100px,grow][155px:n:180px,grow][115px:n:175px,grow][::90px,grow][0px:n,grow]", "[44.00px][][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][][]"));
+		frame.getContentPane().setLayout(new MigLayout("", "[0px:n,grow][15px:n:30px,grow,center][120px:126.00px:150px,grow][90px:n:100px,grow][155px:n:180px,grow][115px:n:175px,grow][::90px,grow][0px:n,grow]", "[20px:44.00px][][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][][]"));
 		
 		JLabel lblTitle = new JLabel("GPA Calculator");
 		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		frame.getContentPane().add(lblTitle, "cell 2 0,alignx center,aligny top");
+		frame.getContentPane().add(lblTitle, "cell 2 0,alignx center,aligny center");
+		
+		errorLabel = new JLabel("");
+		errorLabel.setForeground(Color.RED);
+		frame.getContentPane().add(errorLabel, "cell 3 0,aligny center");
 		
 		JButton btnHelp = new JButton("HELP");
 		frame.getContentPane().add(btnHelp, "cell 6 0,alignx center");
+		
+		lblNewLabel = new JLabel("Course Status");
+		frame.getContentPane().add(lblNewLabel, "cell 2 1");
 		
 		JLabel lblNewLabel_1 = new JLabel("Credit Hours");
 		frame.getContentPane().add(lblNewLabel_1, "cell 3 1");
@@ -611,9 +624,9 @@ public class view1 {
 		});
 		frame.getContentPane().add(btnCalculateGpa, "cell 5 17,alignx center");
 		
-		JLabel GPA = new JLabel("GPA");
-		GPA.setFont(new Font("Tahoma", Font.BOLD, 11));
-		frame.getContentPane().add(GPA, "cell 6 17");
+		gpaLabel = new JLabel("GPA");
+		gpaLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
+		frame.getContentPane().add(gpaLabel, "cell 6 17");
 		
 		JLabel targetGPALabel = new JLabel("Target GPA:");
 		frame.getContentPane().add(targetGPALabel, "cell 2 18,alignx trailing");
@@ -633,9 +646,18 @@ public class view1 {
 		
 	}
 	
+	/**
+	 * 
+	 * @param input
+	 * @return int
+	 * 
+	 * Could be modified to check if the value is reasonable. Not included inorder to avoid causing issues with schools with different systems.
+	 * 
+	 */
 	public int creditValidate(JTextField input) {
        String text = ((JTextField) input).getText();
-       if (text == null) {
+       System.out.println(text.isEmpty());
+       if (text.isEmpty()) { //Checks to see if the string is empty
     	   return -1;
        }
        try {
@@ -647,12 +669,172 @@ public class view1 {
        return 1;
 	}
 	
+	/**
+	 * 
+	 * @param input
+	 * @return int
+	 * 
+	 * Could be modified to check if the value is reasonable. Not included inorder to avoid causing issues with schools with different systems.
+	 */
+	public int gradeValidate(JTextField input) {
+	       String text = ((JTextField) input).getText();
+	       System.out.println(text.isEmpty());
+	       if (text.isEmpty()) { //Checks to see if the string is empty
+	    	   return -1;
+	       }
+	       try {
+	          Double.parseDouble(text);
+	       } catch (NumberFormatException e) {
+	          return 0;
+	       }
+
+	       return 1;
+		}
+	
 	public void calculateGPA() {
 		int totalCredits = 0;
-		int creditGPA = 0; //credit hours times grade
+		double creditGPA = 0; //credit hours times grade
+		double gpa;
+		boolean errorFlag = false;
 		
 		//creditGPA = grade1 * creditHours1;
-		System.out.println(creditValidate(creditHours1));
+		//System.out.println(creditValidate(creditHours1));
+		//System.out.println(gradeValidate(grade1));
+		if (creditValidate(creditHours1) == 1 && gradeValidate(grade1) == 1) {
+			creditGPA = creditGPA + (Double.parseDouble(grade1.getText()) * Integer.parseInt(creditHours1.getText()));
+			totalCredits = totalCredits + Integer.parseInt(creditHours1.getText());
+		}
+		else if (creditValidate(creditHours1) == 0 || gradeValidate(grade1) == 0) {
+			errorFlag = true;
+		}
+		
+		if (creditValidate(creditHours2) == 1 && gradeValidate(grade2) == 1) {
+			creditGPA = creditGPA + (Double.parseDouble(grade2.getText()) * Integer.parseInt(creditHours2.getText()));
+			totalCredits = totalCredits + Integer.parseInt(creditHours2.getText());
+		}
+		else if (creditValidate(creditHours2) == 0 || gradeValidate(grade2) == 0) {
+			errorFlag = true;
+		}
+		
+		if (creditValidate(creditHours3) == 1 && gradeValidate(grade3) == 1) {
+			creditGPA = creditGPA + (Double.parseDouble(grade3.getText()) * Integer.parseInt(creditHours3.getText()));
+			totalCredits = totalCredits + Integer.parseInt(creditHours3.getText());
+		}
+		else if (creditValidate(creditHours3) == 0 || gradeValidate(grade3) == 0) {
+			errorFlag = true;
+		}
+		
+		if (creditValidate(creditHours4) == 1 && gradeValidate(grade4) == 1) {
+			creditGPA = creditGPA + (Double.parseDouble(grade4.getText()) * Integer.parseInt(creditHours4.getText()));
+			totalCredits = totalCredits + Integer.parseInt(creditHours4.getText());
+		}
+		else if (creditValidate(creditHours4) == 0 || gradeValidate(grade4) == 0) {
+			errorFlag = true;
+		}
+		
+		if (creditValidate(creditHours5) == 1 && gradeValidate(grade5) == 1) {
+			creditGPA = creditGPA + (Double.parseDouble(grade5.getText()) * Integer.parseInt(creditHours5.getText()));
+			totalCredits = totalCredits + Integer.parseInt(creditHours5.getText());
+		}
+		else if (creditValidate(creditHours5) == 0 || gradeValidate(grade5) == 0) {
+			errorFlag = true;
+		}
+		
+		if (creditValidate(creditHours6) == 1 && gradeValidate(grade6) == 1) {
+			creditGPA = creditGPA + (Double.parseDouble(grade6.getText()) * Integer.parseInt(creditHours6.getText()));
+			totalCredits = totalCredits + Integer.parseInt(creditHours6.getText());
+		}
+		else if (creditValidate(creditHours6) == 0 || gradeValidate(grade6) == 0) {
+			errorFlag = true;
+		}
+		
+		if (creditValidate(creditHours7) == 1 && gradeValidate(grade7) == 1) {
+			creditGPA = creditGPA + (Double.parseDouble(grade7.getText()) * Integer.parseInt(creditHours7.getText()));
+			totalCredits = totalCredits + Integer.parseInt(creditHours7.getText());
+		}
+		else if (creditValidate(creditHours7) == 0 || gradeValidate(grade7) == 0) {
+			errorFlag = true;
+		}
+		
+		if (creditValidate(creditHours8) == 1 && gradeValidate(grade8) == 1) {
+			creditGPA = creditGPA + (Double.parseDouble(grade8.getText()) * Integer.parseInt(creditHours8.getText()));
+			totalCredits = totalCredits + Integer.parseInt(creditHours8.getText());
+		}
+		else if (creditValidate(creditHours8) == 0 || gradeValidate(grade8) == 0) {
+			errorFlag = true;
+		}
+		
+		if (creditValidate(creditHours9) == 1 && gradeValidate(grade9) == 1) {
+			creditGPA = creditGPA + (Double.parseDouble(grade9.getText()) * Integer.parseInt(creditHours9.getText()));
+			totalCredits = totalCredits + Integer.parseInt(creditHours9.getText());
+		}
+		else if (creditValidate(creditHours9) == 0 || gradeValidate(grade9) == 0) {
+			errorFlag = true;
+		}
+		
+		if (creditValidate(creditHours10) == 1 && gradeValidate(grade10) == 1) {
+			creditGPA = creditGPA + (Double.parseDouble(grade10.getText()) * Integer.parseInt(creditHours10.getText()));
+			totalCredits = totalCredits + Integer.parseInt(creditHours10.getText());
+		}
+		else if (creditValidate(creditHours10) == 0 || gradeValidate(grade10) == 0) {
+			errorFlag = true;
+		}
+		
+		if (creditValidate(creditHours11) == 1 && gradeValidate(grade11) == 1) {
+			creditGPA = creditGPA + (Double.parseDouble(grade11.getText()) * Integer.parseInt(creditHours11.getText()));
+			totalCredits = totalCredits + Integer.parseInt(creditHours11.getText());
+		}
+		else if (creditValidate(creditHours11) == 0 || gradeValidate(grade11) == 0) {
+			errorFlag = true;
+		}
+		
+		if (creditValidate(creditHours12) == 1 && gradeValidate(grade12) == 1) {
+			creditGPA = creditGPA + (Double.parseDouble(grade12.getText()) * Integer.parseInt(creditHours12.getText()));
+			totalCredits = totalCredits + Integer.parseInt(creditHours12.getText());
+		}
+		else if (creditValidate(creditHours12) == 0 || gradeValidate(grade12) == 0) {
+			errorFlag = true;
+		}
+		
+		if (creditValidate(creditHours13) == 1 && gradeValidate(grade13) == 1) {
+			creditGPA = creditGPA + (Double.parseDouble(grade13.getText()) * Integer.parseInt(creditHours13.getText()));
+			totalCredits = totalCredits + Integer.parseInt(creditHours13.getText());
+		}
+		else if (creditValidate(creditHours13) == 0 || gradeValidate(grade13) == 0) {
+			errorFlag = true;
+		}
+		
+		if (creditValidate(creditHours14) == 1 && gradeValidate(grade14) == 1) {
+			creditGPA = creditGPA + (Double.parseDouble(grade14.getText()) * Integer.parseInt(creditHours14.getText()));
+			totalCredits = totalCredits + Integer.parseInt(creditHours14.getText());
+		}
+		else if (creditValidate(creditHours14) == 0 || gradeValidate(grade14) == 0) {
+			errorFlag = true;
+		}
+		
+		if (creditValidate(creditHours15) == 1 && gradeValidate(grade15) == 1) {
+			creditGPA = creditGPA + (Double.parseDouble(grade15.getText()) * Integer.parseInt(creditHours15.getText()));
+			totalCredits = totalCredits + Integer.parseInt(creditHours15.getText());
+		}
+		else if (creditValidate(creditHours15) == 0 || gradeValidate(grade15) == 0) {
+			errorFlag = true;
+		}
+		
+		
+		gpa = creditGPA / totalCredits;
+		
+		gpaLabel.setText("GPA: " +  (Math.floor(gpa * 1000) / 1000)); //Only displays to 3 decimal places
+		
+		//System.out.println("creditGPA: " + creditGPA);
+		//System.out.println("GPA: " + gpa);
+		
+		if (errorFlag == true) {
+			errorLabel.setText(" One or more values entered is an incorrect type. "); //\n GPA should only be doubles and Credits should only be integers
+		}
+		
+		else {
+			errorLabel.setText("");
+		}
 	}
 	
 	public void deleteRow1() {

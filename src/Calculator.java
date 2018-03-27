@@ -11,7 +11,11 @@
  * https://stackoverflow.com/questions/3680221/how-can-i-get-screen-resolution-in-java
  * https://docs.oracle.com/javase/tutorial/uiswing/components/combobox.html
  * http://gpacalculator.net/how-to-calculate-gpa/
+ * https://stackoverflow.com/questions/7747469/how-can-i-truncate-a-double-to-only-two-decimal-places-in-java
  * 
+ * Assumptions:
+ * GPA is Weighted
+ * GPA only needs to be displayed to 3 decimal places
  */
 
 import javax.swing.*;

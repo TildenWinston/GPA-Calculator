@@ -9,7 +9,8 @@
  * WindowBuilder for Eclipse
  * https://www.youtube.com/watch?v=oeswfZz4IW0
  * https://stackoverflow.com/questions/3680221/how-can-i-get-screen-resolution-in-java
- * 
+ * https://docs.oracle.com/javase/tutorial/uiswing/components/combobox.html
+ * http://gpacalculator.net/how-to-calculate-gpa/
  * 
  */
 

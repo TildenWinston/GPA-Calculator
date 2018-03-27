@@ -603,6 +603,12 @@ public class view1 {
 		frame.getContentPane().add(deleteRow15, "cell 6 16");
 		
 		JButton btnCalculateGpa = new JButton("Calculate GPA");
+		btnCalculateGpa.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				calculateGPA();
+			}
+		});
 		frame.getContentPane().add(btnCalculateGpa, "cell 5 17,alignx center");
 		
 		JLabel GPA = new JLabel("GPA");
@@ -625,6 +631,28 @@ public class view1 {
 		JLabel lblNeededGpa = new JLabel("Needed GPA:");
 		frame.getContentPane().add(lblNeededGpa, "cell 6 18");
 		
+	}
+	
+	public int creditValidate(JTextField input) {
+       String text = ((JTextField) input).getText();
+       if (text == null) {
+    	   return -1;
+       }
+       try {
+          Integer.parseInt(text);
+       } catch (NumberFormatException e) {
+          return 0;
+       }
+
+       return 1;
+	}
+	
+	public void calculateGPA() {
+		int totalCredits = 0;
+		int creditGPA = 0; //credit hours times grade
+		
+		//creditGPA = grade1 * creditHours1;
+		System.out.println(creditValidate(creditHours1));
 	}
 	
 	public void deleteRow1() {

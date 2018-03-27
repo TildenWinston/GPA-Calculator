@@ -27,9 +27,33 @@ import java.awt.Color;
 import java.lang.Math;
 
 
+/**
+ * 
+ * @author Tilden Winston (tw8rt)
+ * 
+ * GPA Calculator
+ *
+ * Sources:
+ * Inclass examples
+ * WindowBuilder for Eclipse
+ * https://www.youtube.com/watch?v=oeswfZz4IW0
+ * https://stackoverflow.com/questions/3680221/how-can-i-get-screen-resolution-in-java
+ * https://docs.oracle.com/javase/tutorial/uiswing/components/combobox.html
+ * http://gpacalculator.net/how-to-calculate-gpa/
+ * https://stackoverflow.com/questions/7747469/how-can-i-truncate-a-double-to-only-two-decimal-places-in-java
+ * 
+ * Assumptions:
+ * GPA is Weighted
+ * GPA only needs to be displayed to 3 decimal places
+ * GPA is input as a decimal and not a letter in order to prevent compatibility issues between schools and universities
+ */
+
 public class view1 {
 
-	private JFrame frame;
+	/**
+	 * Variables representing text fields and other GUI components
+	 */
+	private JFrame frmGpaCalculator;
 	private JTextField creditHours1;
 	private JTextField grade1;
 	private JTextField courseName1;
@@ -104,8 +128,8 @@ public class view1 {
 			public void run() {
 				try {
 					view1 window = new view1();
-					window.frame.pack();
-					window.frame.setVisible(true);
+					window.frmGpaCalculator.pack();
+					window.frmGpaCalculator.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -122,9 +146,17 @@ public class view1 {
 
 	/**
 	 * Initialize the contents of the frame.
+	 * 
+	 * each of the input fields and buttons are created and added to the displayed frame.
+	 * 
+	 * Course status fields are optional drop down menus. They are not used in the calculation, they are implemented to aid the users organization
+	 * Credit hours is not optional it accepts the credit hours for a class
+	 * GPA accepts the end grade for a class. Accepts a double value. 
+	 * Course Name is like the course status field. It is not used for calculations and is implemented to aid the user.
 	 */
 	private void initialize() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		//Dynamically sizes window based on screen size
 		double width = (screenSize.getWidth()) * .8;
 /*		if (width < 1024) {
 			width = 1024;
@@ -135,35 +167,49 @@ public class view1 {
 			width = 768;
 		}*/
 		
-		frame = new JFrame();
-		frame.getContentPane().setMinimumSize(new Dimension(1024, 768));
-		frame.setBounds(100, 100, (int)(width), (int)(height));
+		frmGpaCalculator = new JFrame();
+		//Changes icon on the window
+		frmGpaCalculator.setIconImage(Toolkit.getDefaultToolkit().getImage(view1.class.getResource("/com/sun/javafx/scene/control/skin/modena/HTMLEditor-Text-Color-Black.png")));
+		//Adds title to the window
+		frmGpaCalculator.setTitle("GPA Calculator");
+		//Ensures the window never starts smaller than 1024x768
+		frmGpaCalculator.getContentPane().setMinimumSize(new Dimension(1024, 768));
+		frmGpaCalculator.setBounds(25, 25, (int)(width), (int)(height));
 		
 		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new MigLayout("", "[0px:n,grow][15px:n:30px,grow,center][120px:126.00px:150px,grow][90px:n:100px,grow][155px:n:180px,grow][115px:n:175px,grow][::90px,grow][0px:n,grow]", "[20px:44.00px][][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][][][15px:n:30px,grow]"));
+		frmGpaCalculator.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//Sets up MigLayout
+		frmGpaCalculator.getContentPane().setLayout(new MigLayout("", "[0px:n,grow][15px:n:30px,grow,center][120px:126.00px:150px,grow][90px:n:100px,grow][155px:n:180px,grow][115px:n:175px,grow][::90px,grow][0px:n,grow]", "[20px:44.00px][][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][::100px,grow][][][15px:n:30px,grow]"));
 		
 		JLabel lblTitle = new JLabel("GPA Calculator");
 		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		frame.getContentPane().add(lblTitle, "cell 2 0,alignx center,aligny center");
+		frmGpaCalculator.getContentPane().add(lblTitle, "cell 2 0,alignx center,aligny center");
 		
 		JButton btnHelp = new JButton("HELP");
-		frame.getContentPane().add(btnHelp, "cell 6 0,alignx center");
+		btnHelp.addMouseListener(new MouseAdapter() {
+			//Help button displays help text in the errorLabel spot
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				errorLabel.setText("GPA should only be doubles and Credits should only be integers.");
+			}
+		});
+		frmGpaCalculator.getContentPane().add(btnHelp, "cell 6 0,alignx center");
 		
 		lblNewLabel = new JLabel("Course Status");
-		frame.getContentPane().add(lblNewLabel, "cell 2 1");
+		frmGpaCalculator.getContentPane().add(lblNewLabel, "cell 2 1");
 		
 		JLabel lblNewLabel_1 = new JLabel("Credit Hours");
-		frame.getContentPane().add(lblNewLabel_1, "cell 3 1");
+		frmGpaCalculator.getContentPane().add(lblNewLabel_1, "cell 3 1");
 		
 		JLabel lblNewLabel_2 = new JLabel("Grade (Optional)");
-		frame.getContentPane().add(lblNewLabel_2, "cell 4 1");
+		frmGpaCalculator.getContentPane().add(lblNewLabel_2, "cell 4 1");
 		
 		JLabel lblNewLabel_3 = new JLabel("Course Name (Optional)");
-		frame.getContentPane().add(lblNewLabel_3, "cell 5 1");
+		frmGpaCalculator.getContentPane().add(lblNewLabel_3, "cell 5 1");
 		
 		JButton btnDeleteAll = new JButton("Delete All");
 		btnDeleteAll.addMouseListener(new MouseAdapter() {
+			//Calls all deleteRow methods to clear everything.
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				deleteRow1();
@@ -183,25 +229,25 @@ public class view1 {
 				deleteRow15();
 			}
 		});
-		frame.getContentPane().add(btnDeleteAll, "cell 6 1");
+		frmGpaCalculator.getContentPane().add(btnDeleteAll, "cell 6 1");
 		
 		JLabel label = new JLabel("1");
-		frame.getContentPane().add(label, "cell 1 2,alignx center");
+		frmGpaCalculator.getContentPane().add(label, "cell 1 2,alignx center");
 		
 		comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
-		frame.getContentPane().add(comboBox, "cell 2 2,growx");
+		frmGpaCalculator.getContentPane().add(comboBox, "cell 2 2,growx");
 		
 		creditHours1 = new JTextField();
-		frame.getContentPane().add(creditHours1, "cell 3 2,growx");
+		frmGpaCalculator.getContentPane().add(creditHours1, "cell 3 2,growx");
 		creditHours1.setColumns(10);
 		
 		grade1 = new JTextField();
-		frame.getContentPane().add(grade1, "cell 4 2,growx");
+		frmGpaCalculator.getContentPane().add(grade1, "cell 4 2,growx");
 		grade1.setColumns(10);
 		
 		courseName1 = new JTextField();
-		frame.getContentPane().add(courseName1, "cell 5 2,growx");
+		frmGpaCalculator.getContentPane().add(courseName1, "cell 5 2,growx");
 		courseName1.setColumns(10);
 		
 		JButton deleteRow1 = new JButton("Delete Row");
@@ -211,26 +257,26 @@ public class view1 {
 				deleteRow1();
 			}
 		});
-		frame.getContentPane().add(deleteRow1, "cell 6 2");
+		frmGpaCalculator.getContentPane().add(deleteRow1, "cell 6 2");
 		
 		JLabel label_1 = new JLabel("2");
-		frame.getContentPane().add(label_1, "cell 1 3,alignx center");
+		frmGpaCalculator.getContentPane().add(label_1, "cell 1 3,alignx center");
 		
 		comboBox_1 = new JComboBox();
 		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
-		frame.getContentPane().add(comboBox_1, "cell 2 3,growx");
+		frmGpaCalculator.getContentPane().add(comboBox_1, "cell 2 3,growx");
 		
 		creditHours2 = new JTextField();
 		creditHours2.setColumns(10);
-		frame.getContentPane().add(creditHours2, "cell 3 3,growx");
+		frmGpaCalculator.getContentPane().add(creditHours2, "cell 3 3,growx");
 		
 		grade2 = new JTextField();
 		grade2.setColumns(10);
-		frame.getContentPane().add(grade2, "cell 4 3,growx");
+		frmGpaCalculator.getContentPane().add(grade2, "cell 4 3,growx");
 		
 		courseName2 = new JTextField();
 		courseName2.setColumns(10);
-		frame.getContentPane().add(courseName2, "cell 5 3,growx");
+		frmGpaCalculator.getContentPane().add(courseName2, "cell 5 3,growx");
 		
 		JButton deleteRow2 = new JButton("Delete Row");
 		deleteRow2.addMouseListener(new MouseAdapter() {
@@ -239,25 +285,25 @@ public class view1 {
 				deleteRow2();
 			}
 		});
-		frame.getContentPane().add(deleteRow2, "cell 6 3");
+		frmGpaCalculator.getContentPane().add(deleteRow2, "cell 6 3");
 		
 		JLabel label_2 = new JLabel("3");
-		frame.getContentPane().add(label_2, "cell 1 4,alignx center");
+		frmGpaCalculator.getContentPane().add(label_2, "cell 1 4,alignx center");
 		
 		comboBox_2 = new JComboBox();
 		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
-		frame.getContentPane().add(comboBox_2, "cell 2 4,growx");
+		frmGpaCalculator.getContentPane().add(comboBox_2, "cell 2 4,growx");
 		
 		creditHours3 = new JTextField();
 		creditHours3.setColumns(10);
-		frame.getContentPane().add(creditHours3, "cell 3 4,growx");
+		frmGpaCalculator.getContentPane().add(creditHours3, "cell 3 4,growx");
 		
 		grade3 = new JTextField();
 		grade3.setColumns(10);
-		frame.getContentPane().add(grade3, "cell 4 4,growx");
+		frmGpaCalculator.getContentPane().add(grade3, "cell 4 4,growx");
 		
 		courseName3 = new JTextField();
-		frame.getContentPane().add(courseName3, "cell 5 4,growx");
+		frmGpaCalculator.getContentPane().add(courseName3, "cell 5 4,growx");
 		courseName3.setColumns(10);
 		
 		JButton deleteRow3 = new JButton("Delete Row");
@@ -267,25 +313,25 @@ public class view1 {
 				deleteRow3();
 			}
 		});
-		frame.getContentPane().add(deleteRow3, "cell 6 4");
+		frmGpaCalculator.getContentPane().add(deleteRow3, "cell 6 4");
 		
 		JLabel label_3 = new JLabel("4");
-		frame.getContentPane().add(label_3, "cell 1 5,alignx center");
+		frmGpaCalculator.getContentPane().add(label_3, "cell 1 5,alignx center");
 		
 		comboBox_3 = new JComboBox();
 		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
-		frame.getContentPane().add(comboBox_3, "cell 2 5,growx");
+		frmGpaCalculator.getContentPane().add(comboBox_3, "cell 2 5,growx");
 		
 		creditHours4 = new JTextField();
 		creditHours4.setColumns(10);
-		frame.getContentPane().add(creditHours4, "cell 3 5,growx");
+		frmGpaCalculator.getContentPane().add(creditHours4, "cell 3 5,growx");
 		
 		grade4 = new JTextField();
 		grade4.setColumns(10);
-		frame.getContentPane().add(grade4, "cell 4 5,growx");
+		frmGpaCalculator.getContentPane().add(grade4, "cell 4 5,growx");
 		
 		courseName4 = new JTextField();
-		frame.getContentPane().add(courseName4, "cell 5 5,growx");
+		frmGpaCalculator.getContentPane().add(courseName4, "cell 5 5,growx");
 		courseName4.setColumns(10);
 		
 		JButton deleteRow4 = new JButton("Delete Row");
@@ -295,25 +341,25 @@ public class view1 {
 				deleteRow4();
 			}
 		});
-		frame.getContentPane().add(deleteRow4, "cell 6 5");
+		frmGpaCalculator.getContentPane().add(deleteRow4, "cell 6 5");
 		
 		JLabel label_4 = new JLabel("5");
-		frame.getContentPane().add(label_4, "cell 1 6,alignx center");
+		frmGpaCalculator.getContentPane().add(label_4, "cell 1 6,alignx center");
 		
 		comboBox_4 = new JComboBox();
 		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
-		frame.getContentPane().add(comboBox_4, "cell 2 6,growx");
+		frmGpaCalculator.getContentPane().add(comboBox_4, "cell 2 6,growx");
 		
 		creditHours5 = new JTextField();
 		creditHours5.setColumns(10);
-		frame.getContentPane().add(creditHours5, "cell 3 6,growx");
+		frmGpaCalculator.getContentPane().add(creditHours5, "cell 3 6,growx");
 		
 		grade5 = new JTextField();
-		frame.getContentPane().add(grade5, "cell 4 6,growx");
+		frmGpaCalculator.getContentPane().add(grade5, "cell 4 6,growx");
 		grade5.setColumns(10);
 		
 		courseName5 = new JTextField();
-		frame.getContentPane().add(courseName5, "cell 5 6,growx");
+		frmGpaCalculator.getContentPane().add(courseName5, "cell 5 6,growx");
 		courseName5.setColumns(10);
 		
 		JButton deleteRow5 = new JButton("Delete Row");
@@ -323,25 +369,25 @@ public class view1 {
 				deleteRow5();
 			}
 		});
-		frame.getContentPane().add(deleteRow5, "cell 6 6");
+		frmGpaCalculator.getContentPane().add(deleteRow5, "cell 6 6");
 		
 		JLabel label_5 = new JLabel("6");
-		frame.getContentPane().add(label_5, "cell 1 7,alignx center");
+		frmGpaCalculator.getContentPane().add(label_5, "cell 1 7,alignx center");
 		
 		comboBox_5 = new JComboBox();
 		comboBox_5.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
-		frame.getContentPane().add(comboBox_5, "cell 2 7,growx");
+		frmGpaCalculator.getContentPane().add(comboBox_5, "cell 2 7,growx");
 		
 		creditHours6 = new JTextField();
 		creditHours6.setColumns(10);
-		frame.getContentPane().add(creditHours6, "cell 3 7,growx");
+		frmGpaCalculator.getContentPane().add(creditHours6, "cell 3 7,growx");
 		
 		grade6 = new JTextField();
-		frame.getContentPane().add(grade6, "cell 4 7,growx");
+		frmGpaCalculator.getContentPane().add(grade6, "cell 4 7,growx");
 		grade6.setColumns(10);
 		
 		courseName6 = new JTextField();
-		frame.getContentPane().add(courseName6, "cell 5 7,growx");
+		frmGpaCalculator.getContentPane().add(courseName6, "cell 5 7,growx");
 		courseName6.setColumns(10);
 		
 		JButton deleteRow6 = new JButton("Delete Row");
@@ -351,25 +397,25 @@ public class view1 {
 				deleteRow6();
 			}
 		});
-		frame.getContentPane().add(deleteRow6, "cell 6 7");
+		frmGpaCalculator.getContentPane().add(deleteRow6, "cell 6 7");
 		
 		JLabel label_6 = new JLabel("7");
-		frame.getContentPane().add(label_6, "cell 1 8,alignx center");
+		frmGpaCalculator.getContentPane().add(label_6, "cell 1 8,alignx center");
 		
 		comboBox_6 = new JComboBox();
 		comboBox_6.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
-		frame.getContentPane().add(comboBox_6, "cell 2 8,growx");
+		frmGpaCalculator.getContentPane().add(comboBox_6, "cell 2 8,growx");
 		
 		creditHours7 = new JTextField();
 		creditHours7.setColumns(10);
-		frame.getContentPane().add(creditHours7, "cell 3 8,growx");
+		frmGpaCalculator.getContentPane().add(creditHours7, "cell 3 8,growx");
 		
 		grade7 = new JTextField();
-		frame.getContentPane().add(grade7, "cell 4 8,growx");
+		frmGpaCalculator.getContentPane().add(grade7, "cell 4 8,growx");
 		grade7.setColumns(10);
 		
 		courseName7 = new JTextField();
-		frame.getContentPane().add(courseName7, "cell 5 8,growx");
+		frmGpaCalculator.getContentPane().add(courseName7, "cell 5 8,growx");
 		courseName7.setColumns(10);
 		
 		JButton deleteRow7 = new JButton("Delete Row");
@@ -379,25 +425,25 @@ public class view1 {
 				deleteRow7();
 			}
 		});
-		frame.getContentPane().add(deleteRow7, "cell 6 8");
+		frmGpaCalculator.getContentPane().add(deleteRow7, "cell 6 8");
 		
 		JLabel label_7 = new JLabel("8");
-		frame.getContentPane().add(label_7, "cell 1 9,alignx center");
+		frmGpaCalculator.getContentPane().add(label_7, "cell 1 9,alignx center");
 		
 		comboBox_7 = new JComboBox();
 		comboBox_7.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
-		frame.getContentPane().add(comboBox_7, "cell 2 9,growx");
+		frmGpaCalculator.getContentPane().add(comboBox_7, "cell 2 9,growx");
 		
 		creditHours8 = new JTextField();
 		creditHours8.setColumns(10);
-		frame.getContentPane().add(creditHours8, "cell 3 9,growx");
+		frmGpaCalculator.getContentPane().add(creditHours8, "cell 3 9,growx");
 		
 		grade8 = new JTextField();
-		frame.getContentPane().add(grade8, "cell 4 9,growx");
+		frmGpaCalculator.getContentPane().add(grade8, "cell 4 9,growx");
 		grade8.setColumns(10);
 		
 		courseName8 = new JTextField();
-		frame.getContentPane().add(courseName8, "cell 5 9,growx");
+		frmGpaCalculator.getContentPane().add(courseName8, "cell 5 9,growx");
 		courseName8.setColumns(10);
 		
 		JButton deleteRow8 = new JButton("Delete Row");
@@ -407,25 +453,25 @@ public class view1 {
 				deleteRow8();
 			}
 		});
-		frame.getContentPane().add(deleteRow8, "cell 6 9");
+		frmGpaCalculator.getContentPane().add(deleteRow8, "cell 6 9");
 		
 		JLabel label_8 = new JLabel("9");
-		frame.getContentPane().add(label_8, "cell 1 10,alignx center");
+		frmGpaCalculator.getContentPane().add(label_8, "cell 1 10,alignx center");
 		
 		comboBox_8 = new JComboBox();
 		comboBox_8.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
-		frame.getContentPane().add(comboBox_8, "cell 2 10,growx");
+		frmGpaCalculator.getContentPane().add(comboBox_8, "cell 2 10,growx");
 		
 		creditHours9 = new JTextField();
 		creditHours9.setColumns(10);
-		frame.getContentPane().add(creditHours9, "cell 3 10,growx");
+		frmGpaCalculator.getContentPane().add(creditHours9, "cell 3 10,growx");
 		
 		grade9 = new JTextField();
-		frame.getContentPane().add(grade9, "cell 4 10,growx");
+		frmGpaCalculator.getContentPane().add(grade9, "cell 4 10,growx");
 		grade9.setColumns(10);
 		
 		courseName9 = new JTextField();
-		frame.getContentPane().add(courseName9, "cell 5 10,growx");
+		frmGpaCalculator.getContentPane().add(courseName9, "cell 5 10,growx");
 		courseName9.setColumns(10);
 		
 		JButton deleteRow9 = new JButton("Delete Row");
@@ -436,25 +482,25 @@ public class view1 {
 			}
 			
 		});
-		frame.getContentPane().add(deleteRow9, "cell 6 10");
+		frmGpaCalculator.getContentPane().add(deleteRow9, "cell 6 10");
 		
 		JLabel label_9 = new JLabel("10");
-		frame.getContentPane().add(label_9, "cell 1 11,alignx center");
+		frmGpaCalculator.getContentPane().add(label_9, "cell 1 11,alignx center");
 		
 		comboBox_9 = new JComboBox();
 		comboBox_9.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
-		frame.getContentPane().add(comboBox_9, "cell 2 11,growx");
+		frmGpaCalculator.getContentPane().add(comboBox_9, "cell 2 11,growx");
 		
 		creditHours10 = new JTextField();
 		creditHours10.setColumns(10);
-		frame.getContentPane().add(creditHours10, "cell 3 11,growx");
+		frmGpaCalculator.getContentPane().add(creditHours10, "cell 3 11,growx");
 		
 		grade10 = new JTextField();
-		frame.getContentPane().add(grade10, "cell 4 11,growx");
+		frmGpaCalculator.getContentPane().add(grade10, "cell 4 11,growx");
 		grade10.setColumns(10);
 		
 		courseName10 = new JTextField();
-		frame.getContentPane().add(courseName10, "cell 5 11,growx");
+		frmGpaCalculator.getContentPane().add(courseName10, "cell 5 11,growx");
 		courseName10.setColumns(10);
 		
 		JButton deleteRow10 = new JButton("Delete Row");
@@ -465,25 +511,25 @@ public class view1 {
 			}
 			
 		});
-		frame.getContentPane().add(deleteRow10, "cell 6 11");
+		frmGpaCalculator.getContentPane().add(deleteRow10, "cell 6 11");
 		
 		JLabel label_10 = new JLabel("11");
-		frame.getContentPane().add(label_10, "cell 1 12,alignx center");
+		frmGpaCalculator.getContentPane().add(label_10, "cell 1 12,alignx center");
 		
 		comboBox_10 = new JComboBox();
 		comboBox_10.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
-		frame.getContentPane().add(comboBox_10, "cell 2 12,growx");
+		frmGpaCalculator.getContentPane().add(comboBox_10, "cell 2 12,growx");
 		
 		creditHours11 = new JTextField();
 		creditHours11.setColumns(10);
-		frame.getContentPane().add(creditHours11, "cell 3 12,growx");
+		frmGpaCalculator.getContentPane().add(creditHours11, "cell 3 12,growx");
 		
 		grade11 = new JTextField();
-		frame.getContentPane().add(grade11, "cell 4 12,growx");
+		frmGpaCalculator.getContentPane().add(grade11, "cell 4 12,growx");
 		grade11.setColumns(10);
 		
 		courseName11 = new JTextField();
-		frame.getContentPane().add(courseName11, "cell 5 12,growx");
+		frmGpaCalculator.getContentPane().add(courseName11, "cell 5 12,growx");
 		courseName11.setColumns(10);
 		
 		JButton deleteRow11 = new JButton("Delete Row");
@@ -494,25 +540,25 @@ public class view1 {
 			}
 			
 		});
-		frame.getContentPane().add(deleteRow11, "cell 6 12");
+		frmGpaCalculator.getContentPane().add(deleteRow11, "cell 6 12");
 		
 		JLabel label_11 = new JLabel("12");
-		frame.getContentPane().add(label_11, "cell 1 13,alignx center");
+		frmGpaCalculator.getContentPane().add(label_11, "cell 1 13,alignx center");
 		
 		comboBox_11 = new JComboBox();
 		comboBox_11.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
-		frame.getContentPane().add(comboBox_11, "cell 2 13,growx");
+		frmGpaCalculator.getContentPane().add(comboBox_11, "cell 2 13,growx");
 		
 		creditHours12 = new JTextField();
 		creditHours12.setColumns(10);
-		frame.getContentPane().add(creditHours12, "cell 3 13,growx");
+		frmGpaCalculator.getContentPane().add(creditHours12, "cell 3 13,growx");
 		
 		grade12 = new JTextField();
-		frame.getContentPane().add(grade12, "cell 4 13,growx");
+		frmGpaCalculator.getContentPane().add(grade12, "cell 4 13,growx");
 		grade12.setColumns(10);
 		
 		courseName12 = new JTextField();
-		frame.getContentPane().add(courseName12, "cell 5 13,growx");
+		frmGpaCalculator.getContentPane().add(courseName12, "cell 5 13,growx");
 		courseName12.setColumns(10);
 		
 		JButton deleteRow12 = new JButton("Delete Row");
@@ -523,25 +569,25 @@ public class view1 {
 			}
 			
 		});
-		frame.getContentPane().add(deleteRow12, "cell 6 13");
+		frmGpaCalculator.getContentPane().add(deleteRow12, "cell 6 13");
 		
 		JLabel label_12 = new JLabel("13");
-		frame.getContentPane().add(label_12, "cell 1 14,alignx center");
+		frmGpaCalculator.getContentPane().add(label_12, "cell 1 14,alignx center");
 		
 		comboBox_12 = new JComboBox();
 		comboBox_12.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
-		frame.getContentPane().add(comboBox_12, "cell 2 14,growx");
+		frmGpaCalculator.getContentPane().add(comboBox_12, "cell 2 14,growx");
 		
 		creditHours13 = new JTextField();
 		creditHours13.setColumns(10);
-		frame.getContentPane().add(creditHours13, "cell 3 14,growx");
+		frmGpaCalculator.getContentPane().add(creditHours13, "cell 3 14,growx");
 		
 		grade13 = new JTextField();
-		frame.getContentPane().add(grade13, "cell 4 14,growx");
+		frmGpaCalculator.getContentPane().add(grade13, "cell 4 14,growx");
 		grade13.setColumns(10);
 		
 		courseName13 = new JTextField();
-		frame.getContentPane().add(courseName13, "cell 5 14,growx");
+		frmGpaCalculator.getContentPane().add(courseName13, "cell 5 14,growx");
 		courseName13.setColumns(10);
 		
 		JButton deleteRow13 = new JButton("Delete Row");
@@ -552,26 +598,26 @@ public class view1 {
 			}
 			
 		});
-		frame.getContentPane().add(deleteRow13, "cell 6 14");
+		frmGpaCalculator.getContentPane().add(deleteRow13, "cell 6 14");
 		
 		JLabel label_13 = new JLabel("14");
-		frame.getContentPane().add(label_13, "cell 1 15,alignx center");
+		frmGpaCalculator.getContentPane().add(label_13, "cell 1 15,alignx center");
 		
 		comboBox_13 = new JComboBox();
 		comboBox_13.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
-		frame.getContentPane().add(comboBox_13, "cell 2 15,growx");
+		frmGpaCalculator.getContentPane().add(comboBox_13, "cell 2 15,growx");
 		
 		creditHours14 = new JTextField();
 		creditHours14.setColumns(10);
-		frame.getContentPane().add(creditHours14, "cell 3 15,growx");
+		frmGpaCalculator.getContentPane().add(creditHours14, "cell 3 15,growx");
 		
 		grade14 = new JTextField();
-		frame.getContentPane().add(grade14, "cell 4 15,growx");
+		frmGpaCalculator.getContentPane().add(grade14, "cell 4 15,growx");
 		grade14.setColumns(10);
 		
 		courseName14 = new JTextField();
 		courseName14.setColumns(10);
-		frame.getContentPane().add(courseName14, "cell 5 15,growx");
+		frmGpaCalculator.getContentPane().add(courseName14, "cell 5 15,growx");
 		
 		JButton deleteRow14 = new JButton("Delete Row");
 		deleteRow14.addMouseListener(new MouseAdapter() {
@@ -581,26 +627,26 @@ public class view1 {
 			}
 			
 		});
-		frame.getContentPane().add(deleteRow14, "cell 6 15");
+		frmGpaCalculator.getContentPane().add(deleteRow14, "cell 6 15");
 		
 		JLabel label_14 = new JLabel("15");
-		frame.getContentPane().add(label_14, "cell 1 16,alignx center");
+		frmGpaCalculator.getContentPane().add(label_14, "cell 1 16,alignx center");
 		
 		comboBox_14 = new JComboBox();
 		comboBox_14.setModel(new DefaultComboBoxModel(new String[] {"", "taken", "current", "anticipated"}));
-		frame.getContentPane().add(comboBox_14, "cell 2 16,growx");
+		frmGpaCalculator.getContentPane().add(comboBox_14, "cell 2 16,growx");
 		
 		creditHours15 = new JTextField();
 		creditHours15.setColumns(10);
-		frame.getContentPane().add(creditHours15, "cell 3 16,growx");
+		frmGpaCalculator.getContentPane().add(creditHours15, "cell 3 16,growx");
 		
 		grade15 = new JTextField();
-		frame.getContentPane().add(grade15, "cell 4 16,growx");
+		frmGpaCalculator.getContentPane().add(grade15, "cell 4 16,growx");
 		grade15.setColumns(10);
 		
 		courseName15 = new JTextField();
 		courseName15.setColumns(10);
-		frame.getContentPane().add(courseName15, "cell 5 16,growx");
+		frmGpaCalculator.getContentPane().add(courseName15, "cell 5 16,growx");
 		
 		JButton deleteRow15 = new JButton("Delete Row");
 		deleteRow15.addMouseListener(new MouseAdapter() {
@@ -610,26 +656,27 @@ public class view1 {
 			}
 			
 		});
-		frame.getContentPane().add(deleteRow15, "cell 6 16");
+		frmGpaCalculator.getContentPane().add(deleteRow15, "cell 6 16");
 		
 		JButton btnCalculateGpa = new JButton("Calculate GPA");
 		btnCalculateGpa.addMouseListener(new MouseAdapter() {
+			//Calls calculateGPA
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				calculateGPA();
 			}
 		});
-		frame.getContentPane().add(btnCalculateGpa, "cell 4 17,alignx center");
+		frmGpaCalculator.getContentPane().add(btnCalculateGpa, "cell 4 17,alignx center");
 		
 		gpaLabel = new JLabel("GPA");
 		gpaLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
-		frame.getContentPane().add(gpaLabel, "cell 5 17");
+		frmGpaCalculator.getContentPane().add(gpaLabel, "cell 5 17");
 		
 		JLabel targetGPALabel = new JLabel("Target GPA:");
-		frame.getContentPane().add(targetGPALabel, "cell 2 18,alignx trailing");
+		frmGpaCalculator.getContentPane().add(targetGPALabel, "cell 2 18,alignx trailing");
 		
 		targetGPA = new JTextField();
-		frame.getContentPane().add(targetGPA, "cell 3 18,growx");
+		frmGpaCalculator.getContentPane().add(targetGPA, "cell 3 18,growx");
 		targetGPA.setColumns(10);
 		
 		JButton targetGPAButton = new JButton("Calculate GPA for Target");
@@ -639,24 +686,33 @@ public class view1 {
 				targetGPA();
 			}
 		});
-		frame.getContentPane().add(targetGPAButton, "cell 4 18,alignx center");
+		frmGpaCalculator.getContentPane().add(targetGPAButton, "cell 4 18,alignx center");
 		
 		neededGPA = new JLabel("Needed GPA:");
 		neededGPA.setFont(new Font("Tahoma", Font.BOLD, 11));
-		frame.getContentPane().add(neededGPA, "cell 5 18");
+		frmGpaCalculator.getContentPane().add(neededGPA, "cell 5 18");
 		
 		errorLabel = new JLabel("");
 		errorLabel.setForeground(Color.RED);
-		frame.getContentPane().add(errorLabel, "cell 2 19,aligny center");
+		frmGpaCalculator.getContentPane().add(errorLabel, "cell 2 19,aligny center");
 		
 	}
 	
 	/**
+	 * Validates input for credit hour fields
+	 * 
+	 * Checks to make sure that the input is valid. Checks for empty string and checks that it is an int value.
+	 * 
+	 * Returns -1 for an empty input
+	 * 0 for an invalid data type (Not int)
+	 * 1 for a valid input
 	 * 
 	 * @param input
 	 * @return int
+	 * @Assumption Could be modified to check if the value is reasonable. Not currently included in order to avoid causing issues with schools with different systems.
+	 * Also assumes
 	 * 
-	 * Could be modified to check if the value is reasonable. Not included inorder to avoid causing issues with schools with different systems.
+	 *
 	 * 
 	 */
 	public int creditValidate(JTextField input) {
@@ -675,11 +731,18 @@ public class view1 {
 	}
 	
 	/**
+	 * Validates input for grade fields
 	 * 
-	 * @param input
+	 * Checks to make sure that the input is valid. Checks for empty string and checks that it is a double value.
+	 * 
+	 * Returns -1 for an empty input
+	 * 0 for an invalid data type (Not Double)
+	 * 1 for a valid input
+	 * 
+	 * @param input JTextField
 	 * @return int
+	 * @Assumption Could be modified to check if the value is reasonable. Not currently included in order to avoid causing issues with schools with different systems.
 	 * 
-	 * Could be modified to check if the value is reasonable. Not included inorder to avoid causing issues with schools with different systems.
 	 */
 	public int gradeValidate(JTextField input) {
 	       String text = ((JTextField) input).getText();
@@ -696,6 +759,19 @@ public class view1 {
 	       return 1;
 		}
 	
+	
+	/**
+	 * Calculates GPA based on user inputs
+	 * Currently does not return a value, instead sets the gpa label text to the answer.
+	 * 
+	 * The method looks at all relevant text fields and then validates the contained data.
+	 * The input is validated for type and existence.
+	 * If the input passes, the data is then parsed and added to the calculation
+	 * This has to be competed for all relevant input fields separately due to the fields being unique.
+	 * 
+	 * If at any point the input fails validation due to formatting, errorFlag is set to false causing an error message to be displayed.
+	 * Calculation goes on skilling the bad input.
+	 */
 	public void calculateGPA() {
 		int totalCredits = 0;
 		double creditGPA = 0; //credit hours times grade
@@ -837,11 +913,25 @@ public class view1 {
 			errorLabel.setText(" One or more values entered is an incorrect type. GPA should only be doubles and Credits should only be integers."); //\n GPA should only be doubles and Credits should only be integers
 		}
 		
+		//Resets the errorLabel if no error is detected
 		else {
 			errorLabel.setText("");
 		}
 	}
 	
+	/**
+	 * Calculates target GPA based on user inputs
+	 * Currently does not return a value, instead sets the neededGPA and gpa
+	 * 
+	 * The method looks at all relevant text fields and then validates the contained data.
+	 * The input is validated for type and existence.
+	 * If the input passes, the data is then parsed and added to the calculation
+	 * If only the creditHours text field contains data, then the hours are added as planned credits.
+	 * This has to be competed for all relevant input fields separately due to the fields being unique.
+	 * 
+	 * If at any point the input fails validation due to formatting, errorFlag is set to false causing an error message to be displayed.
+	 * Calculation goes on skilling the bad input.
+	 */
 	public void targetGPA() {
 		int currentCredits = 0; //Total number of credits with a grade associated.
 		int plannedCredits = 0;
@@ -1038,7 +1128,7 @@ public class view1 {
 			requiredGPA = requiredGPA / (plannedCredits);
 			//System.out.println("requiredGPA: " + requiredGPA);
 			 
-			neededGPA.setText("Needed GPA: " + (Math.floor(requiredGPA * 1000) / 1000));
+			neededGPA.setText("Needed GPA: " + (Math.floor(requiredGPA * 1000) / 1000));	//Only displays to 3 decimal places
 			
 			//System.out.println("creditGPA: " + creditGPA);
 			//System.out.println("GPA: " + gpa);
@@ -1053,15 +1143,20 @@ public class view1 {
 			errorLabel.setText("One or more values entered is an incorrect type. GPA should only be doubles and Credits should only be integers."); //\n GPA should only be doubles and Credits should only be integers
 		}
 		
+		//Resets errorLabel
 		else {
 			errorLabel.setText("");
 		}
 		
+		//Warns user if the needed GPA is over 4.0
 		if (requiredGPA > 4) {
 			errorLabel.setText("Needed GPA over 4.0, try adding more credit hours and recalculating.  "); 
 		}
 	}
 	
+	/**
+	 * Clears values in specified row
+	 */
 	public void deleteRow1() {
 		comboBox.setSelectedIndex(0);
 		creditHours1.setText("");
@@ -1070,6 +1165,9 @@ public class view1 {
 		//System.out.println("Delete Button One Pressed");
 	}
 	
+	/**
+	 * Clears values in specified row
+	 */
 	public void deleteRow2() {
 		comboBox_1.setSelectedIndex(0);
 		creditHours2.setText("");
@@ -1077,6 +1175,10 @@ public class view1 {
 		courseName2.setText("");
 		//System.out.println("Delete Button One Pressed");
 	}
+	
+	/**
+	 * Clears values in specified row
+	 */
 	public void deleteRow3() {
 		comboBox_2.setSelectedIndex(0);
 		creditHours3.setText("");
@@ -1085,6 +1187,9 @@ public class view1 {
 		//System.out.println("Delete Button One Pressed");
 	}
 	
+	/**
+	 * Clears values in specified row
+	 */
 	public void deleteRow4() {
 		comboBox_3.setSelectedIndex(0);
 		creditHours4.setText("");
@@ -1093,6 +1198,9 @@ public class view1 {
 		//System.out.println("Delete Button One Pressed");
 	}
 	
+	/**
+	 * Clears values in specified row
+	 */
 	public void deleteRow5() {
 		comboBox_4.setSelectedIndex(0);
 		creditHours5.setText("");
@@ -1101,6 +1209,9 @@ public class view1 {
 		//System.out.println("Delete Button One Pressed");
 	}
 	
+	/**
+	 * Clears values in specified row
+	 */
 	public void deleteRow6() {
 		comboBox_5.setSelectedIndex(0);
 		creditHours6.setText("");
@@ -1109,6 +1220,9 @@ public class view1 {
 		//System.out.println("Delete Button One Pressed");
 	}
 	
+	/**
+	 * Clears values in specified row
+	 */
 	public void deleteRow7() {
 		comboBox_6.setSelectedIndex(0);
 		creditHours7.setText("");
@@ -1117,6 +1231,9 @@ public class view1 {
 		//System.out.println("Delete Button One Pressed");
 	}
 	
+	/**
+	 * Clears values in specified row
+	 */
 	public void deleteRow8() {
 		comboBox_7.setSelectedIndex(0);
 		creditHours8.setText("");
@@ -1125,6 +1242,9 @@ public class view1 {
 		//System.out.println("Delete Button One Pressed");
 	}
 	
+	/**
+	 * Clears values in specified row
+	 */
 	public void deleteRow9() {
 		comboBox_8.setSelectedIndex(0);
 		creditHours9.setText("");
@@ -1133,6 +1253,9 @@ public class view1 {
 		//System.out.println("Delete Button One Pressed");
 	}
 	
+	/**
+	 * Clears values in specified row
+	 */
 	public void deleteRow10() {
 		comboBox_9.setSelectedIndex(0);
 		creditHours10.setText("");
@@ -1141,6 +1264,9 @@ public class view1 {
 		//System.out.println("Delete Button One Pressed");
 	}
 	
+	/**
+	 * Clears values in specified row
+	 */
 	public void deleteRow11() {
 		comboBox_10.setSelectedIndex(0);
 		creditHours11.setText("");
@@ -1149,6 +1275,9 @@ public class view1 {
 		//System.out.println("Delete Button One Pressed");
 	}
 	
+	/**
+	 * Clears values in specified row
+	 */
 	public void deleteRow12() {
 		comboBox_11.setSelectedIndex(0);
 		creditHours12.setText("");
@@ -1157,6 +1286,9 @@ public class view1 {
 		//System.out.println("Delete Button One Pressed");
 	}
 	
+	/**
+	 * Clears values in specified row
+	 */
 	public void deleteRow13() {
 		comboBox_12.setSelectedIndex(0);
 		creditHours13.setText("");
@@ -1165,6 +1297,9 @@ public class view1 {
 		//System.out.println("Delete Button One Pressed");
 	}
 	
+	/**
+	 * Clears values in specified row
+	 */
 	public void deleteRow14() {
 		comboBox_13.setSelectedIndex(0);
 		creditHours14.setText("");
@@ -1173,6 +1308,9 @@ public class view1 {
 		//System.out.println("Delete Button One Pressed");
 	}
 	
+	/**
+	 * Clears values in specified row
+	 */
 	public void deleteRow15() {
 		comboBox_14.setSelectedIndex(0);
 		creditHours15.setText("");

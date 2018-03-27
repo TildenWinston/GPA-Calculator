@@ -16,6 +16,7 @@
  * Assumptions:
  * GPA is Weighted
  * GPA only needs to be displayed to 3 decimal places
+ * GPA is input as a decimal and not a letter in order to prevent compatibility issues between schools and universities
  */
 
 import javax.swing.*;
